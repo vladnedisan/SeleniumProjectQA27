@@ -7,8 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginTest {
-
+public class WishListTest {
     public static WebDriver driver;
 
     @Before
@@ -20,20 +19,20 @@ public class LoginTest {
     }
 
     @Test
-    public void validLoginTest() {
+    public void validWishlistAdd() {
         driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
         driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
         driver.findElement(By.id("email")).sendKeys("vlad.nedisan@yahoo.com");
         driver.findElement(By.id("pass")).sendKeys("1234567");
         driver.findElement(By.id("send2")).click();
-        //check hello message
-        WebElement message = driver.findElement(By.cssSelector("[class='welcome-msg'] [class='hello']"));
-        Assert.assertEquals(message.getText(), "Hello, Vlad Nedisan!");
+        driver.findElement(By.cssSelector("#nav > ol > li.level0.nav-5.parent > a")).click();
+        driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col3-layout > div > div.col-wrapper > div.col-main > div.category-products > ul > li > div > div.actions > ul > li:nth-child(1)")).click();
+        //check My Wishlist page is displayed
+        WebElement myWishlistTitle = driver.findElement(By.cssSelector("[class='page-title title-buttons'] h1"));
+        Assert.assertEquals(myWishlistTitle.getText(), "MY WISHLIST");
+        //check url page contains "wishlist"
+        Assert.assertTrue(driver.getCurrentUrl().contains("/wishlist"));
 
-        //check logout button is displayed after login
-        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a > span.label")).click();
-        WebElement logoutButton = driver.findElement(By.cssSelector("[title='Log Out']"));
-        Assert.assertTrue(logoutButton.isDisplayed());
     }
 
     @After
